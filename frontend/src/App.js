@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Button from 'react-bootstrap/Button';
+
+import './App.css';
+import './bootstrap.min.css';
 
 export default function App() {
-	const [seconds, setSeconds] = useState(10);
-	const [minutes, setMinutes] = useState(10);
+	const [seconds, setSeconds] = useState(null);
+	const [minutes, setMinutes] = useState(null);
 	const [count, setCount] = useState(0);
 	const [started, setStarted] = useState(false);
 	const [reset, setReset] = useState(true);
@@ -31,6 +35,14 @@ export default function App() {
 	};
 
 	const startTimer = () => {
+		if (seconds === null) {
+			setSeconds(0);
+		}
+
+		if (minutes === null) {
+			setMinutes(0);
+		}
+
 		if (!(minutes === 0 && seconds === 0)) {
 			setStarted(true);
 			setReset(false);
@@ -39,7 +51,7 @@ export default function App() {
 
 	const resetTimer = () => {
 		setReset(true);
-		setMinutes(10);
+		setMinutes(1);
 		setSeconds(10);
 	};
 
@@ -91,19 +103,21 @@ export default function App() {
 
 	if (reset) {
 		return (
-			<div className="App">
-				Set Timer: <input type="text" name="minutes" value={minutes} onChange={event => updateMinutes(event.target.value)}/> <input type="text" name="seconds" value={seconds} onChange={event => updateSeconds(event.target.value)}/>
-
-				<button onClick={() => startTimer()} type="button">Start</button>
+			<div className="SetTimer">
+				<div className="InputTime">
+				<input className="InputMinutes" type="text" name="minutes" placeholder="M" value={minutes} onChange={event => updateMinutes(event.target.value)}/><span className="TimerUnit">m</span> <input className="InputSeconds" type="text" name="seconds" placeholder="S" value={seconds} onChange={event => updateSeconds(event.target.value)}/><span className="TimerUnit">s</span>
+				</div>
+				<Button variant="primary" onClick={() => startTimer()}>Start</Button>
 			</div>
 		);
 	}
 
 	return (
-		<div className="App">
-			<h1>Timer: {minutes}:{seconds}</h1>
-			<button onClick={() => startStop()} type="button">{!started ? "Start" : "Stop"}</button>
-			{!started ? <button onClick={() => resetTimer()} type="button">Reset</button> : ""}
+		<div className="Timer">
+			<span className="TimerText">Stream starting in...</span>
+			<div className="Countdown">{minutes < 10 ? "0" : ""}{minutes}<span className="TimerUnit">m</span> {seconds < 10 ? "0" : ""}{seconds}<span className="TimerUnit">s</span></div>
+			<Button variant="primary" onClick={() => startStop()}>{!started ? "Start" : "Stop"}</Button>{' '}
+			{!started ? <Button variant="outline-primary" onClick={() => resetTimer()}>Reset</Button> : ""}
 		</div>
 	);
 }

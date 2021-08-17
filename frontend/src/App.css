@@ -1,38 +1,35 @@
-.App {
-  text-align: center;
+.SetTimer, .Timer {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 50%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.TimerText {
+	font-size: 100px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.InputTime {
+	font-family: helvetica,sans-serif;
+	font-size: 200px;
+	margin: 20px;
+	text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.InputMinutes, .InputSeconds {
+	width: 240px;
+	text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.Countdown {
+	font-family: helvetica,sans-serif;
+	font-size: 200px;
+	margin: 20px;
+	text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.TimerUnit {
+	font-size: 50%;
 }
