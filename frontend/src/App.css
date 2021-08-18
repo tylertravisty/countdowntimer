@@ -7,7 +7,30 @@
 	width: 50%;
 }
 
-.TimerText {
+.SetTitle {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	font-size: 100px;
+	width: 100%;
+	text-align: center;
+}
+
+.Title {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	font-size: 100px;
+	width: 100%;
+	text-align: center;
+}
+
+.SetTimerDescription {
+	font-size: 100px;
+	width: 100%;
+}
+
+.TimerDescription {
 	font-size: 100px;
 }
 
@@ -33,3 +56,14 @@
 .TimerUnit {
 	font-size: 50%;
 }
+
+.Alarm {
+	animation: blinker 2s step-start infinite;
+}
+
+@keyframes blinker {
+	50% {
+		opacity: 0;
+	}
+}
+

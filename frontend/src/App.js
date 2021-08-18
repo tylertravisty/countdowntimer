@@ -5,8 +5,13 @@ import './App.css';
 import './bootstrap.min.css';
 
 export default function App() {
+	const [alarm, setAlarm] = useState(false);
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
 	const [seconds, setSeconds] = useState(null);
+	const [startSeconds, setStartSeconds] = useState(null);
 	const [minutes, setMinutes] = useState(null);
+	const [startMinutes, setStartMinutes] = useState(null);
 	const [count, setCount] = useState(0);
 	const [started, setStarted] = useState(false);
 	const [reset, setReset] = useState(true);
@@ -20,6 +25,7 @@ export default function App() {
 						setSeconds(59);
 					} else {
 						setStarted(false);
+						setAlarm(true);
 					}
 				} else {
 					setSeconds(seconds - 1);
@@ -44,15 +50,18 @@ export default function App() {
 		}
 
 		if (!(minutes === 0 && seconds === 0)) {
+			setStartSeconds(seconds);
+			setStartMinutes(minutes);
 			setStarted(true);
 			setReset(false);
 		}
 	};
 
 	const resetTimer = () => {
+		setAlarm(false);
 		setReset(true);
-		setMinutes(1);
-		setSeconds(10);
+		setSeconds(startSeconds);
+		setMinutes(startMinutes);
 	};
 
 	const verifyNumber = (number) => {
@@ -103,21 +112,28 @@ export default function App() {
 
 	if (reset) {
 		return (
-			<div className="SetTimer">
-				<div className="InputTime">
-				<input className="InputMinutes" type="text" name="minutes" placeholder="M" value={minutes} onChange={event => updateMinutes(event.target.value)}/><span className="TimerUnit">m</span> <input className="InputSeconds" type="text" name="seconds" placeholder="S" value={seconds} onChange={event => updateSeconds(event.target.value)}/><span className="TimerUnit">s</span>
+			<div>
+				<input className="SetTitle" type="text" name="title" placeholder="Add Title" value={title} onChange={event => setTitle(event.target.value)}/>
+				<div className="SetTimer">
+					<input className="SetTimerDescription" type="text" name="description" placeholder="Add Description" value={description} onChange={event => setDescription(event.target.value)}/>
+					<div className="InputTime">
+					<input className="InputMinutes" type="text" name="minutes" placeholder="00" value={minutes} onChange={event => updateMinutes(event.target.value)}/><span className="TimerUnit">m</span> <input className="InputSeconds" type="text" name="seconds" placeholder="00" value={seconds} onChange={event => updateSeconds(event.target.value)}/><span className="TimerUnit">s</span>
+					</div>
+					<Button className="Start" variant="primary" onClick={() => startTimer()}>Start</Button>
 				</div>
-				<Button variant="primary" onClick={() => startTimer()}>Start</Button>
 			</div>
 		);
 	}
 
 	return (
-		<div className="Timer">
-			<span className="TimerText">Stream starting in...</span>
-			<div className="Countdown">{minutes < 10 ? "0" : ""}{minutes}<span className="TimerUnit">m</span> {seconds < 10 ? "0" : ""}{seconds}<span className="TimerUnit">s</span></div>
-			<Button variant="primary" onClick={() => startStop()}>{!started ? "Start" : "Stop"}</Button>{' '}
-			{!started ? <Button variant="outline-primary" onClick={() => resetTimer()}>Reset</Button> : ""}
+		<div>
+			<span className="Title bg-primary text-white">{title}</span>
+			<div className="Timer">
+				<span className="TimerDescription">{description}</span>
+				<div className="Countdown">{minutes < 10 ? "0" : ""}{minutes}<span className="TimerUnit">m</span> {seconds < 10 ? "0" : ""}{seconds}<span className="TimerUnit">s</span></div>
+				<Button className="StartStop" variant="primary" onClick={() => startStop()}>{!started ? "Start" : "Stop"}</Button>{' '}
+				{!started ? <Button variant="outline-primary" onClick={() => resetTimer()}>Reset</Button> : ""}
+			</div>
 		</div>
 	);
 }

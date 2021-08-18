@@ -6,10 +6,6 @@ import (
 	"github.com/wailsapp/wails"
 )
 
-func basic() string {
-	return "World!"
-}
-
 //go:embed frontend/build/static/js/main.js
 var js string
 
@@ -21,12 +17,11 @@ func main() {
 	app := wails.CreateApp(&wails.AppConfig{
 		Width:     1024,
 		Height:    768,
-		Title:     "countdowntimer",
+		Title:     "Countdown Timer",
 		JS:        js,
 		CSS:       css,
 		Colour:    "#FFFFFF",
 		Resizable: true,
 	})
-	app.Bind(basic)
 	app.Run()
 }
