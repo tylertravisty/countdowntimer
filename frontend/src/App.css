@@ -57,6 +57,10 @@
 	font-size: 50%;
 }
 
+.ThemeRadioDiv {
+	float: right;
+}
+
 .Alarm {
 	animation: blinker 2s step-start infinite;
 }

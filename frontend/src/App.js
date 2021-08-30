@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 import './App.css';
 import './bootstrap.min.css';
@@ -15,6 +18,7 @@ export default function App() {
 	const [count, setCount] = useState(0);
 	const [started, setStarted] = useState(false);
 	const [reset, setReset] = useState(true);
+	const [theme, setTheme] = useState("primary");
 
 	useEffect(() => {
 		if (started) {
@@ -119,7 +123,33 @@ export default function App() {
 					<div className="InputTime">
 					<input className="InputMinutes" type="text" name="minutes" placeholder="00" value={minutes} onChange={event => updateMinutes(event.target.value)}/><span className="TimerUnit">m</span> <input className="InputSeconds" type="text" name="seconds" placeholder="00" value={seconds} onChange={event => updateSeconds(event.target.value)}/><span className="TimerUnit">s</span>
 					</div>
-					<Button className="Start" variant="primary" onClick={() => startTimer()}>Start</Button>
+					<Row>
+						<Col>
+							<Button className="Start" variant={theme} onClick={() => startTimer()}>Start</Button>
+						</Col>
+						<Col>
+							<div className="ThemeRadioDiv">
+								<Form.Check
+									checked={theme === "primary"}
+									inline
+									label="Primary"
+									name="theme"
+									type="radio"
+									id="primary"
+									onChange={(event) => setTheme(event.target.id)}
+								/>
+								<Form.Check
+									checked={theme === "dark"}
+									inline
+									label="Dark"
+									name="theme"
+									type="radio"
+									id="dark"
+									onChange={(event) => setTheme(event.target.id)}
+								/>
+							</div>
+						</Col>
+					</Row>
 				</div>
 			</div>
 		);
@@ -127,12 +157,12 @@ export default function App() {
 
 	return (
 		<div>
-			<span className="Title bg-primary text-white">{title}</span>
+			<span className={"Title bg-"+theme+" text-white"}>{title}</span>
 			<div className="Timer">
 				<span className="TimerDescription">{description}</span>
 				<div className="Countdown">{minutes < 10 ? "0" : ""}{minutes}<span className="TimerUnit">m</span> {seconds < 10 ? "0" : ""}{seconds}<span className="TimerUnit">s</span></div>
-				<Button className="StartStop" variant="primary" onClick={() => startStop()}>{!started ? "Start" : "Stop"}</Button>{' '}
-				{!started ? <Button variant="outline-primary" onClick={() => resetTimer()}>Reset</Button> : ""}
+				<Button className="StartStop" variant={theme} onClick={() => startStop()}>{!started ? "Start" : "Stop"}</Button>{' '}
+				{!started ? <Button variant={"outline-"+theme} onClick={() => resetTimer()}>Reset</Button> : ""}
 			</div>
 		</div>
 	);
